@@ -35,7 +35,7 @@
         <div class="col-md-3">
 
             <ul>
-                {% for i in categories%}
+                {% for i in maincategories%}
                     <li>
                         <a href="/">{{ i.name }}</a>
                         <ul>
@@ -51,11 +51,13 @@
 
         </div>
         <div class="col-md-9">
+
             {% for i in notes %}
                 <div class="card mb-3">
+
                     <div class="card-header">
                         <p class="{% cycle 'text-primary' 'text-danger' %}">
-                            Категория: {{ i.category.maincategory }} </p>
+                            Категория: {{ i.category}} </p>
                         <!--i.category-->
                     </div>
 
@@ -72,6 +74,8 @@
 
                         </div>
                     </div>
+
+
                     <div class="card-footer text-muted">
                         {{ i.created_at }} {{ i.created_at|timesince }}
                     </div>

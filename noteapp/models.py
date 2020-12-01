@@ -14,12 +14,12 @@ class MainCategory(models.Model):
         return self.name
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    maincategory = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True) #related_name='sub'
-
-    def __str__(self):
-        return self.name
+# class Category(models.Model):
+#     name = models.CharField(max_length=100)
+#     maincategory = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True) #related_name='sub'
+#
+#     def __str__(self):
+#         return self.name
 
 
 class Note(models.Model):
@@ -33,7 +33,7 @@ class Note(models.Model):
     photo = models.ImageField(upload_to='photo_work/%Y/%m/%d/', verbose_name="Фото", blank=True)
     is_published = models.BooleanField(default="True", verbose_name="Публиковать?")
     password = models.CharField(max_length=8, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, null=True, related_name='sub')
+    category = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True, related_name='sub')
 
     def __str__(self):
         return self.title

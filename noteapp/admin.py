@@ -20,4 +20,4 @@ class MainCategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Note, NoteAdmin)  # Внимание! порядок регистрации классов важен
 admin.site.register(MainCategory, MainCategoryAdmin)
-admin.site.register(Category)
+
