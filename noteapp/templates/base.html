@@ -22,12 +22,12 @@
                 <div class="btn-group dropright mb-1 bg" style="width: 100%; background-color: aliceblue">
                     <p class="btn btn-light dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <a href="/category/{{ i.pk }}">{{ i.name }}</a>
+                        <a href="{% url 'category' i.pk %}">{{ i.name }}</a>
                     </p>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         {% for j in i.sub.all %}
-                            <li><a class="dropdown-item" href="/one_note/{{ j.pk }}">Заметка № : {{ j.pk }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'onenote' j.pk %}">Заметка № : {{ j.pk }}</a></li>
                         {% endfor %}
                     </ul>
 
@@ -37,11 +37,11 @@
             <ul>
                 {% for i in maincategories %}
                     <li>
-                        <a href="/category/{{ i.pk }}">{{ i.name }}</a>
+                        <a href="{% url "category" i.pk %}">{{ i.name }}</a>
                         <ul>
                             {% for j in i.sub.all %}
                                 <li>
-                                    <a href="/one_note/{{ j.pk }}">Заметка:{{ j.pk }}</a>
+                                    <a href="{% url 'onenote' j.pk%}">Заметка:{{ j.pk }}</a>
                                 </li>
                             {% endfor %}
                         </ul>

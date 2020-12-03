@@ -7,7 +7,7 @@ from .models import *
 # Добавим поля в админку
 
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "category",'created_at', 'update_at', 'is_published')
+    list_display = ("id", "title", "category", 'created_at', 'update_at', 'is_published')
     list_display_links = ("id", "title")
     search_fields = ('title', 'content')
 
@@ -20,4 +20,3 @@ class MainCategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Note, NoteAdmin)  # Внимание! порядок регистрации классов важен
 admin.site.register(MainCategory, MainCategoryAdmin)
-
