@@ -20,4 +20,24 @@ def index(request):
                                                                         # 'categories': categories,
                                                                         })
 
+
 # Create your views here.
+def get_category(request, category_id):
+    notes = Note.objects.filter(category_id=category_id)
+    maincategories = MainCategory.objects.all()
+    maincategory = MainCategory.objects.get(id=category_id)
+    return render(request, "noteapp/category.html", {'notes': notes,
+                                                     'maincategories': maincategories,
+                                                     'maincategory': maincategory,
+                                                     })
+
+
+def get_one_note(request, note_id):
+    notes = Note.objects.get(id=note_id)
+    maincategories = MainCategory.objects.all()
+    # maincategory = MainCategory.objects.get(id=note_id)
+
+    return render(request, "noteapp/note_one.html", {'notes': notes,
+                                                     'maincategories': maincategories,
+                                                     # 'maincategory': maincategory,
+                                                     })
