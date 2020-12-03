@@ -22,7 +22,7 @@
                 <div class="btn-group dropright mb-1 bg" style="width: 100%; background-color: aliceblue">
                     <p class="btn btn-light dropdown-toggle" data-toggle="dropdown"
                        aria-expanded="false">
-                        <a href="{% url 'category' i.pk %}">{{ i.name }}</a>
+                        <a href='{{ i.get_absolute_url }}'>{{ i.name }}</a>
                     </p>
 
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -37,11 +37,11 @@
             <ul>
                 {% for i in maincategories %}
                     <li>
-                        <a href="{% url "category" i.pk %}">{{ i.name }}</a>
+                        <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
                         <ul>
                             {% for j in i.sub.all %}
                                 <li>
-                                    <a href="{% url 'onenote' j.pk%}">Заметка:{{ j.pk }}</a>
+                                    <a href="{{ j.get_absolute_url }}">Заметка:{{ j.pk }}</a>
                                 </li>
                             {% endfor %}
                         </ul>

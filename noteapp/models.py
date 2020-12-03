@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -12,6 +13,9 @@ class MainCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("category", kwargs={'category_id': self.pk})
 
 
 # class Category(models.Model):
@@ -37,6 +41,9 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("onenote", kwargs={'note_id': self.pk})
 
     # Поработаем с видом админки
     class Meta:
