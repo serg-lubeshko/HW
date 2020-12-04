@@ -23,7 +23,7 @@
                     <div class="media-body">
                         <h5 class="card-title m-3">{{ i.title }}</h5>
                         <p class="card-text">{{ i.content|linebreaks }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="{{ i.get_absolute_url }}" class="btn btn-primary">Go somewhere</a>
 
                     </div>
                 </div>

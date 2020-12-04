@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %} Заметка №: {{ notesitem.pk }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-9">
+
+        <div class="card mb-3">
+
+            <div class="card-header">
+                <p class="{% cycle 'text-primary' 'text-danger' %}">
+                    Категория: {{ notes.category }} {{ notes.pk }} </p>
+            </div>
+
+            <div class="media">
+                {% if notesitem.photo %}
+                    <img class="mr-3 m-3" src="{{ notesitem.photo.url }}" width="300">
+                {% else %}
+                    <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200">
+                {% endif %}
+                <div class="media-body">
+                    <h5 class="card-title m-3">{{ notesitem.title }}</h5>
+                    <p class="card-text">{{ notesitem.content|linebreaks }}</p>
+                    <a href="{% url "home" %}" class="btn btn-primary"
+                       style="background-color: crimson; border-color: crimson">На главную</a>
+
+                </div>
+            </div>
+
+            <div class="card-footer text-muted">
+                {{ notesitem.created_at }} {{ notesitem.created_at|timesince }}
+            </div>
+        </div>
+
+    </div>>
+
+{% endblock %}

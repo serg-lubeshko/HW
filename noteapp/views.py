@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.http import HttpResponse
@@ -33,11 +33,21 @@ def get_category(request, category_id):
 
 
 def get_one_note(request, note_id):
-    notes = Note.objects.get(id=note_id)
+    notes = get_object_or_404(Note, id=note_id)
+    # notes = Note.objects.get(id=note_id)
     maincategories = MainCategory.objects.all()
     # maincategory = MainCategory.objects.get(id=note_id)
 
     return render(request, "noteapp/note_one.html", {'notes': notes,
                                                      'maincategories': maincategories,
                                                      # 'maincategory': maincategory,
+                                                     })
+
+
+def view_note(request, note_id):
+    notes_item = get_object_or_404(Note, id=note_id)
+    # notes_item = Note.objects.get(id=note_id)
+    maincategories = MainCategory.objects.all()
+    return render(request, "noteapp/view_one.html", {'notesitem': notes_item,
+                                                     'maincategories': maincategories,
                                                      })

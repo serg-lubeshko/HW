@@ -39,11 +39,16 @@ class Note(models.Model):
     password = models.CharField(max_length=8, blank=True)
     category = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True, related_name='sub', unique=False)
 
+    def get_absolute_url(self):
+        return reverse("onenote", kwargs={'note_id': self.pk})
+
+    def get_absolute_url(self):
+        return reverse("viewnote", kwargs={'note_id': self.pk})
+
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
-        return reverse("onenote", kwargs={'note_id': self.pk})
+
 
     # Поработаем с видом админки
     class Meta:
