@@ -9,7 +9,7 @@
 
             <div class="card-header">
                 <p class="{% cycle 'text-primary' 'text-danger' %}">
-                    Категория: {{ notes.category }} {{ notes.pk }} </p>
+                    Категория: {{ notesitem.category }} [Заметка {{ notesitem.pk }}] </p>
             </div>
 
             <div class="media">
@@ -31,7 +31,6 @@
                 {{ notesitem.created_at }} {{ notesitem.created_at|timesince }}
             </div>
         </div>
-
-    </div>>
+    </div>
 
 {% endblock %}

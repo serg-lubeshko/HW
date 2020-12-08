@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %} Заметка №: {{ notesitem.pk }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-9">
+        <h1>Добавление категории</h1>
+
+        <form action="{% url "addcategory" %}" method="post">
+            {% csrf_token %}
+
+
+
+            {{ form_category.as_p }}
+
+
+
+            <button type="submit" class="btn btn-primary btn-block">Добавить новость</button>
+        </form>
+    </div>
+{% endblock %}

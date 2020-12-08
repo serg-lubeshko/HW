@@ -20,8 +20,9 @@
                     {% endif %}
                     <div class="media-body">
                         <h5 class="card-title m-3">{{ i.title }}</h5>
-                        <p class="card-text">{{ i.content|linebreaks }}</p>
-                        <a href="{{ i.get_absolute_url }}" class="btn btn-primary">Go somewhere</a>
+                        <p class="card-text">{{ i.content|linebreaks|truncatewords:40 }}</p>
+                        <a href="{{ i.get_absolute_url }}" class="btn btn-outline-primary">Go somewhere</a>
+
 
                     </div>
                 </div>

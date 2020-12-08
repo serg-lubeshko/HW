@@ -39,7 +39,7 @@ class Note(models.Model):
     password = models.CharField(max_length=8, blank=True)
     category = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True, related_name='sub', unique=False)
 
-    def get_absolute_url(self):
+    def get_absolute_url1(self):
         return reverse("onenote", kwargs={'note_id': self.pk})
 
     def get_absolute_url(self):

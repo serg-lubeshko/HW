@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
+    {#     <link rel="stylesheet" href="{% static "bootstrap-4.5.3-dist/css/bootstrap.min.css" %}">#}
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -19,43 +21,42 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-3">
-            <!-- Default dropright button -->
-            {% for i in maincategories %}
-                <div class="btn-group dropright mb-1 bg" style="width: 100%; background-color: aliceblue">
-                    <p class="btn btn-light dropdown-toggle" data-toggle="dropdown"
-                       aria-expanded="false">
-                        <a href='{{ i.get_absolute_url }}'>{{ i.name }}</a>
-                    </p>
 
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        {% for j in i.sub.all %}
-                            <li><a class="dropdown-item" href="{% url 'onenote' j.pk %}">Заметка № : {{ j.pk }}</a></li>
-                        {% endfor %}
-                    </ul>
+            <div class="vertmenu">
+                <ul>
+                    {% for i in maincategories %}
+                        <li>
+                            <a class="active" href="{{ i.get_absolute_url }}">{{ i.name }}</a>
+                            <input type="checkbox" class="subCat" id="{{ i.pk }}" checked="checked"/>
+                            <label class="chka" for="{{ i.pk }}"></label>
+                                <ul style="display:none">
+                                    {% for j in i.sub.all %}
+                                    <li>
+                                        <a href="{{ j.get_absolute_url1 }}">Заметка: {{ j.pk }}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url "addcategory" %}" class="btn btn-outline-primary">Добавить категорию</a>
 
-                </div><br>
-            {% endfor %}
 
-            <ul>
-                {% for i in maincategories %}
-                    <li>
-                        <a href="{{ i.get_absolute_url }}">{{ i.name }}</a>
-                        <ul>
-                            {% for j in i.sub.all %}
-                                <li>
-                                    <a href="{{ j.get_absolute_url }}">Заметка:{{ j.pk }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
+
+            </div>
 
         </div>
-        {% block content %} CONTENT {% endblock %}
 
+
+
+
+
+
+
+        {% block content %} CONTENT {% endblock %}
     </div>
 </div>
+
 
 <!-- Optional JavaScript; choose one of the two! -->
 

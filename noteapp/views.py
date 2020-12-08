@@ -1,4 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from .forms import NoteForm, CategoryForm
+from .encryption.encryption import hello
 
 # Create your views here.
 from django.http import HttpResponse
@@ -51,3 +53,48 @@ def view_note(request, note_id):
     return render(request, "noteapp/view_one.html", {'notesitem': notes_item,
                                                      'maincategories': maincategories,
                                                      })
+
+
+def add_note(request):
+    maincategories = MainCategory.objects.all()
+    if request.method == "POST":
+
+        form = NoteForm(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+            a_text = form.cleaned_data.get('content')  # Получил данные из запроса
+            print()
+            print("A равно", a_text)
+            b_key = form.cleaned_data.get('password')
+            print("B равно", b_key)
+            c_upd = form.cleaned_data
+            c_upd["content_en"] = hello()
+            print(c_upd)
+            Note.objects.create(**c_upd)
+            # s = Note.objects.update(content_en="1")
+            # s.save()
+            # print(Note.objects.get(**form.cleaned_data))
+            return redirect("home")
+
+    else:
+        form = NoteForm()
+    return render(request, "noteapp/add_note.html", {'maincategories': maincategories,
+                                                     'form': form})
+
+
+def add_category(request):
+    maincategories = MainCategory.objects.all()
+    if request.method == "POST":
+
+        form_category = CategoryForm(request.POST)
+        if form_category.is_valid():
+            print(form_category.cleaned_data)
+            # MainCategory.objects.create(**form_category.cleaned_data)
+            category = form_category.save()
+            print(category)
+            return redirect("home")
+
+    else:
+        form_category = CategoryForm()
+    return render(request, "noteapp/add_category.html", {'maincategories': maincategories,
+                                                         'form_category': form_category})

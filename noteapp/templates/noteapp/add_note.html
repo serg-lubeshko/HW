@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %} Заметка №: {{ notesitem.pk }}{% endblock %}
+
+{% block content %}
+    <div class="col-md-9">
+        <h1>Добавление заметки</h1>
+
+        <form action="{% url "addnote" %}" method="post"  enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}             <!--Общие ошибки для формы-->
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Название</label>
+                {{ form.title }}
+                <div class="invalid-feedback">
+                    {{ form.title.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.content.id_for_label }}">Текст</label>
+                {{ form.content }}
+                <div class="invalid-feedback">
+                    {{ form.content.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.is_published.id_for_label }}">Публиковать?</label>
+                {{ form.is_published }}
+                <div class="invalid-feedback">
+                    {{ form.is_published.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.category.id_for_label }}">Категория</label>
+                {{ form.category }}
+                <div class="invalid-feedback">
+                    {{ form.category.errors }}
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Пароль</label>
+                {{ form.password }}
+                <div class="invalid-feedback">
+                    {{ form.password.errors }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.photo.id_for_label }}">Фото</label>
+                {{ form.photo }}
+                <div class="invalid-feedback">
+                    {{ form.photo.errors }}
+                </div>
+            </div>
+
+
+            {% comment %}
+            {{ form.as_p }}
+            {% endcomment %}
+
+
+            <button type="submit" class="btn btn-primary btn-block">Добавить новость</button>
+        </form>
+    </div>
+{% endblock %}
