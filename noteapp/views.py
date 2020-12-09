@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import NoteForm, CategoryForm
-from .encryption.encryption import hello
+from .encryption.encryption import encrypt
 
 # Create your views here.
 from django.http import HttpResponse
@@ -61,16 +61,35 @@ def add_note(request):
 
         form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-            print(form.cleaned_data)
-            a_text = form.cleaned_data.get('content')  # Получил данные из запроса
-            print()
-            print("A равно", a_text)
+
+            print("form.cleaned_datat Словарь=====", form.cleaned_data)
+
+            a_text = form.cleaned_data.get('content')  # Получил данные из запроса content
+            b_text = form.cleaned_data.get('title')     # Получил данные из запроса название
             b_key = form.cleaned_data.get('password')
-            print("B равно", b_key)
-            c_upd = form.cleaned_data
-            c_upd["content_en"] = hello()
-            print(c_upd)
-            Note.objects.create(**c_upd)
+            post_dict = form.cleaned_data  # Получил словарь из post
+            encrypt_dict = encrypt(a_text, b_key, 1)  # Получил словарь_шифр из encryption.py
+            encrypt_dict_b = encrypt(b_text, b_key, 2)
+
+            p_e_dict = {**post_dict, **encrypt_dict, **encrypt_dict_b}
+            Note.objects.create(**p_e_dict)  # Распакуем в модель
+
+            # print()
+            # print("A равно===", a_text)
+            #
+            # print("B равно====", b_key)
+            #
+            #
+            # print()
+            # print("encrypt_dict Словарь=====", encrypt_dict)
+            # print()
+            # print("encrypt_dict Словарь=====", encrypt_dict_b)
+            #
+            #
+            # # post_dict["content_en"] = encrypt_dict['cipher_text']
+            # print()
+            # print(p_e_dict)
+
             # s = Note.objects.update(content_en="1")
             # s.save()
             # print(Note.objects.get(**form.cleaned_data))

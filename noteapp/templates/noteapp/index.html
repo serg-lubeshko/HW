@@ -8,7 +8,9 @@
 
                 <div class="card-header">
                     <p class="{% cycle 'text-primary' 'text-danger' %}">
-                        Категория: {{ i.category }} {{ i.pk }} </p>
+                        Категория: {{ i.category|lower }} [заметка № {{ i.pk }}]<br>
+                        Даные зашифрованы
+                    </p>
                     <!--i.category-->
                 </div>
 
@@ -19,8 +21,9 @@
                         <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200" alt="фото">
                     {% endif %}
                     <div class="media-body">
-                        <h5 class="card-title m-3">{{ i.title }}</h5>
-                        <p class="card-text">{{ i.content|linebreaks|truncatewords:40 }}</p>
+                        <h5 class="card-title m-3">{{ i.title_en }}</h5>
+                        <p class="card-text"
+                           style="word-wrap: break-word">{{ i.content_en|linebreaks|truncatewords:40|truncatechars_html:100 }}</p>
                         <a href="{{ i.get_absolute_url }}" class="btn btn-outline-primary">Go somewhere</a>
 
 

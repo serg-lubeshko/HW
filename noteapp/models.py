@@ -29,15 +29,26 @@ class MainCategory(models.Model):
 class Note(models.Model):
     title = models.CharField(max_length=150,
                              verbose_name="Наименование")  # Здесь verbose для наименования столбцов на русском
-    title_en = models.CharField(max_length=150, blank=True)
     content = models.TextField(verbose_name="Контент")
-    content_en = models.TextField(blank=True)
+    photo = models.ImageField(upload_to='photo_work/%Y/%m/%d/', verbose_name="Фото", blank=True)
     created_at = models.DateField(auto_now_add=True, verbose_name="Создан")
     update_at = models.DateTimeField(auto_now=True, verbose_name="Обновлено")
-    photo = models.ImageField(upload_to='photo_work/%Y/%m/%d/', verbose_name="Фото", blank=True)
     is_published = models.BooleanField(default="True", verbose_name="Публиковать?")
-    password = models.CharField(max_length=8, blank=True)
     category = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True, related_name='sub', unique=False)
+
+    title_en = models.CharField(max_length=150, blank=True)
+    content_en = models.TextField(blank=True)
+    password = models.CharField(max_length=8, blank=True)
+
+    salt1 = models.TextField(verbose_name="Salt_контент", blank=True)
+    nonce1 = models.TextField (verbose_name='nonce_контент', blank=True)
+    tag1 = models.TextField(verbose_name='tag_контент', blank=True)
+
+    salt2 = models.TextField(verbose_name="Salt_заголовок", blank=True)
+    nonce2 = models.TextField (verbose_name='nonce_заголовок', blank=True)
+    tag2 = models.TextField(verbose_name='tag_заголовок', blank=True)
+
+
 
     def get_absolute_url1(self):
         return reverse("onenote", kwargs={'note_id': self.pk})

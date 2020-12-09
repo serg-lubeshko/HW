@@ -7,9 +7,12 @@ from .models import *
 # Добавим поля в админку
 
 class NoteAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "category", 'created_at', 'update_at', 'is_published')
+    list_display = (
+    "id", "title", "category", 'created_at', 'update_at', 'is_published', )
     list_display_links = ("id", "title")
     search_fields = ('title', 'content')
+    readonly_fields = ('salt1', 'nonce1', 'tag1', 'salt2', 'nonce2',
+    'tag2')
 
 
 class MainCategoryAdmin(admin.ModelAdmin):
