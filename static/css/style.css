@@ -1,5 +1,5 @@
 body {
-    background-color: #e6e7e8;
+    background-color: #ffffff;
 }
 .vertmenu {
 margin: 0 20px;
@@ -30,9 +30,9 @@ cursor: pointer;
 .vertmenu .subCat.minus,
 .subCat:checked + .chka:before {
 content: '+';
-font-size: 26px;
+font-size:35px;
 color: #1266B1;
-font-weight: bold;
+/*font-weight: bold;*/
 font-family: Courier;
 }
 .vertmenu .subCat.minus, .subCat:checked + .chka:before {

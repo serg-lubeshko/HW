@@ -3,7 +3,7 @@
 {% block title %} Заметка №: {{ notesitem.pk }}{% endblock %}
 
 {% block content %}
-    <div class="col-md-9">
+{#    <div class="col-md-9">#}
         <h1>Добавление категории</h1>
 
         <form action="{% url "addcategory" %}" method="post">
@@ -15,7 +15,7 @@
 
 
 
-            <button type="submit" class="btn btn-primary btn-block">Добавить новость</button>
+            <button type="submit" class="btn btn-primary btn-block">Добавить категорию</button>
         </form>
     </div>
 {% endblock %}

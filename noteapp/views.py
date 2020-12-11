@@ -1,15 +1,75 @@
+from django.contrib.auth import login, logout
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import NoteForm, CategoryForm
+from .forms import NoteForm, CategoryForm, UserRegisterForm, UserLoginForm
 from .encryption.encryption import encrypt
+
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from django.http import HttpResponse
 from .models import *
 
 
+def registry(request):
+    if request.method == "POST":
+        form = UserRegisterForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()  # Сохранил в объект "пользователь", для того что б сразу не логинится
+            login(request, user)  # И сразу вызвал метод Login, где приняли нашего "пользователь" и рекв.
+            messages.success(request, "Вы зарегистрированы")
+            return redirect("home")
+        else:
+            messages.error(request, "Произошла ошибка")
+    else:
+        form = UserRegisterForm()
+
+    return render(request, "noteapp/registry.html", {'form': form})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        print(request.method)
+        form = UserLoginForm(data=request.POST)  # Без ДАТЫ НЕ РАБОТАЕТ ПОЧЕМУ-ТО
+        print(form)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)  # Из from django.contrib.auth import login"
+            print(login(request, user))
+            return redirect("home")
+    else:
+        form = UserLoginForm()
+    return render(request, "noteapp/login.html", {'form': form})
+
+
+
+def  user_logaut(request):
+   logout(request)
+   return redirect("home")
+
+
+
 def index(request):
     notes = Note.objects.all()
     maincategories = MainCategory.objects.all()
+    print(notes)
+    if request.method == "POST":
+        a = request.POST["password_2"]
+        pk = request.POST["pk"]
+        print(request.POST)
+        print(a)
+        print('ЗДЕСЬ', pk)
+        note_pk = Note.objects.get(id=pk)
+        # note_pk_password = note_pk[1]
+        print("Здесь", note_pk.password)
+        if a == note_pk.password:
+            print("Есть")
+            return redirect("viewnote", pk)
+        else:
+            print("нЕТ")
+        # print("Здесь2", note_pk_password )
+
     # categories = Category.objects.all()
     # res = ""
     # for i in notes:
@@ -55,17 +115,17 @@ def view_note(request, note_id):
                                                      })
 
 
+@login_required  # Если не авторизован, то не добавишь новость
 def add_note(request):
     maincategories = MainCategory.objects.all()
     if request.method == "POST":
 
         form = NoteForm(request.POST, request.FILES)
         if form.is_valid():
-
             print("form.cleaned_datat Словарь=====", form.cleaned_data)
 
             a_text = form.cleaned_data.get('content')  # Получил данные из запроса content
-            b_text = form.cleaned_data.get('title')     # Получил данные из запроса название
+            b_text = form.cleaned_data.get('title')  # Получил данные из запроса название
             b_key = form.cleaned_data.get('password')
             post_dict = form.cleaned_data  # Получил словарь из post
             encrypt_dict = encrypt(a_text, b_key, 1)  # Получил словарь_шифр из encryption.py

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% block content %}
+{#    <div class="col-md-9">#}
+        <h1>Логин</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+
+            {{ form.as_p }}
+
+
+            <button type="submit" class="btn btn-primary btn-block">Логин</button>
+        </form>
+    </div>
+{% endblock %}
+</body>
+</html>

@@ -1,25 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col-md-9">
+    {#<div class="col-md-9">#}
 
     <div class="card mb-3">
 
         <div class="card-header">
             <p class="{% cycle 'text-primary' 'text-danger' %}">
-                Категория: {{ notes.category }} {{ notes.pk }} </p>
+                 {{ notes.category|title }}: заметка №{{ notes.pk }} </p>
+            {% if request.user.is_authenticated %}
+                <h6>Данные зашифрованы.</h6>
+            {% else %}
+                <h6>Данные зашифрованы. Для расшифровки и добавления заметок необходимо авторизоваться</h6>
+            {% endif %}
         </div>
 
         <div class="media">
             {% if notes.photo %}
-                <img class="mr-3 m-3" src="{{ notes.photo.url }}" width="300">
+                <img class="mr-3 m-3" src="{{ notes.photo.url }}" width="300" alt="фото">
             {% else %}
-                <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200">
+                <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200" alt="фото">
             {% endif %}
             <div class="media-body">
                 <h5 class="card-title m-3">{{ notes.title }}</h5>
-                <p class="card-text">{{ notes.content|linebreaks|truncatewords:40  }}</p>
-                <a href="{{ notes.get_absolute_url }}" class="btn btn-outline-primary">Go somewhere</a>
+                <p class="card-text">{{ notes.content|linebreaks|truncatewords:40 }}</p>
+                {#                <a href="{{ notes.get_absolute_url }}" class="btn btn-outline-primary">Go somewhere</a>#}
 
             </div>
         </div>
@@ -27,8 +32,17 @@
 
         <div class="card-footer text-muted">
             {{ notes.created_at }} {{ notes.created_at|timesince }}
+
+            {% if request.user.is_authenticated %}
+                <form action="{% url "home" %}" method="post">
+                    {% csrf_token %}
+                    <input id="id_password" type="password" placeholder="Пароль" , name="password_2">
+                    <input type="submit" value="Расшифровать">
+                    <input type="hidden" , name="pk" , value="{{ notes.pk }}">
+                </form>
+            {% endif %}
         </div>
     </div>
-</div>
+    </div>
 {% endblock %}
 

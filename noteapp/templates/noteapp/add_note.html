@@ -3,7 +3,7 @@
 {% block title %} Заметка №: {{ notesitem.pk }}{% endblock %}
 
 {% block content %}
-    <div class="col-md-9">
+{#    <div class="col-md-9">#}
         <h1>Добавление заметки</h1>
 
         <form action="{% url "addnote" %}" method="post"  enctype="multipart/form-data">

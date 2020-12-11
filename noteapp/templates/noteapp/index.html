@@ -2,40 +2,53 @@
 
 
 {% block content %}
-    <div class="col-md-9">
-        {% for i in notes %}
-            <div class="card mb-3">
+    {#    <div class="col-md-9">#}
+    {% for i in notes %}
+        <div class="card mb-3">
 
-                <div class="card-header">
-                    <p class="{% cycle 'text-primary' 'text-danger' %}">
-                        Категория: {{ i.category|lower }} [заметка № {{ i.pk }}]<br>
-                        Даные зашифрованы
-                    </p>
-                    <!--i.category-->
-                </div>
-
-                <div class="media">
-                    {% if i.photo %}
-                        <img class="mr-3 m-3" src="{{ i.photo.url }}" width="300" alt="фото">
-                    {% else %}
-                        <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200" alt="фото">
-                    {% endif %}
-                    <div class="media-body">
-                        <h5 class="card-title m-3">{{ i.title_en }}</h5>
-                        <p class="card-text"
-                           style="word-wrap: break-word">{{ i.content_en|linebreaks|truncatewords:40|truncatechars_html:100 }}</p>
-                        <a href="{{ i.get_absolute_url }}" class="btn btn-outline-primary">Go somewhere</a>
-
-
-                    </div>
-                </div>
-
-
-                <div class="card-footer text-muted">
-                    {{ i.created_at }} {{ i.created_at|timesince }}
-                </div>
+            <div class="card-header">
+                <p class="{% cycle 'text-primary' 'text-danger' %}">
+                    {{ i.category|title }}: заметка № {{ i.pk }}</p>
+                {% if request.user.is_authenticated %}
+                    <h6>Данные зашифрованы.</h6>
+                {% else%}
+                    <h6>Данные зашифрованы. Для расшифровки и добавления заметок необходимо авторизоваться</h6>
+                {% endif %}
+                <!--i.category-->
             </div>
-        {% endfor %}
+
+            <div class="media">
+                {% if i.photo %}
+                    <img class="mr-3 m-3" src="{{ i.photo.url }}" width="300" alt="фото">
+                {% else %}
+                    <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200" alt="фото">
+                {% endif %}
+                <div class="media-body">
+                    <h5 class="card-title m-3">{{ i.title_en|truncatechars:30 }}</h5>
+                    <p class="card-text"
+                       style="word-wrap: break-word">{{ i.content_en|linebreaks|truncatewords:40|truncatechars:30 }}</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-footer text-muted">
+                {{ i.created_at }} {{ i.created_at|timesince }}
+                {% if request.user.is_authenticated %}
+                    <form action="{% url "home" %}" method="post">
+                        {% csrf_token %}
+                        <input id="id_password" type="password" placeholder="Пароль" , name="password_2">
+                        <input type="submit" value="Расшифровать">
+                        <input type="hidden" , name="pk" , value="{{ i.pk }}">
+
+                    </form>
+                {% endif %}
+                {#                    <a href="{{ i.get_absolute_url }}" class="btn btn-outline-primary float-right">Go somewhere</a>#}
+            </div>
+
+        </div>
+    {% endfor %}
     </div>
 {% endblock %}
 

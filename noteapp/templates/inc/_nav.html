@@ -6,19 +6,32 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'home' %}"> Сергей (033) 313 15 15<br>Лубешко </a>
+            </li>
+            <li class="nav-item " style="padding-left: 3.5rem">
                 <a class="nav-link" href="{% url 'home' %}">Главная</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{% url 'addnote' %}">Добавить заметку</a>
-            </li>
+            {% if request.user.is_authenticated %}
+                <li class="nav-item" style="padding-left: 3.5rem">
+                    <a class="nav-link" href="{% url 'addnote' %}">Добавить заметку</a>
+                </li>
+            {% endif %}
         </ul>
 
-        <span class="navbar-text">
-            <a href="#">Регистрация</a> | <a href="#">Логин</a>
 
-        </span>
+        {% if request.user.is_authenticated %}
+            <span class="navbar-text" style="padding-right: 3.5rem">
+                Добро пожаловать, {{ user.username }} |
+                <a href="{% url 'logaut' %}">Выход</a>
+            </span>
 
+        {% else %}
+            <span class="navbar-text" style="padding-right: 3.5rem">
+                <a href="{% url 'registry' %}">Регистрация</a> |
+                <a href="{% url "login" %}">Логин</a>
 
+            </span>
+        {% endif %}
 
     </div>
 </nav>
