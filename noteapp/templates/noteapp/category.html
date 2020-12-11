@@ -26,20 +26,20 @@
                     <img class="mr-3" src="https://picsum.photos/seed/picsum/300/200">
                 {% endif %}
                 <div class="media-body">
-                    <h5 class="card-title m-3">{{ i.title }}</h5>
-                    <p class="card-text">{{ i.content|linebreaks|truncatewords:40 }}</p>
+                    <h5 class="card-title m-3">{{ i.title_en|truncatechars:30 }}</h5>
+                    <p class="card-text">{{ i.content_en|truncatechars:30 }}</p>
 
 
                 </div>
             </div>
 
 
-            <div class="card-footer text-muted">
-                {{ i.created_at }} {{ i.created_at|timesince }}
+            <div class="card-footer text-muted" >
+
                 {% if request.user.is_authenticated %}
-                    <form action="{% url "home" %}" method="post">
+                    <form action="{{ i.get_absolute_url}}" method="post" class="m-2">
                         {% csrf_token %}
-                        <input id="id_password" type="password" placeholder="Пароль" , name="password_2">
+                        <input id="id_password" type="password" placeholder="Пароль (мой 123)" , name="password_2">
                         <input type="submit" value="Расшифровать">
                         <input type="hidden" , name="pk" , value="{{ i.pk }}">
 

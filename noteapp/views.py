@@ -43,32 +43,31 @@ def user_login(request):
     return render(request, "noteapp/login.html", {'form': form})
 
 
-
-def  user_logaut(request):
-   logout(request)
-   return redirect("home")
-
+def user_logaut(request):
+    logout(request)
+    return redirect("home")
 
 
 def index(request):
     notes = Note.objects.all()
     maincategories = MainCategory.objects.all()
     print(notes)
-    if request.method == "POST":
-        a = request.POST["password_2"]
-        pk = request.POST["pk"]
-        print(request.POST)
-        print(a)
-        print('ЗДЕСЬ', pk)
-        note_pk = Note.objects.get(id=pk)
-        # note_pk_password = note_pk[1]
-        print("Здесь", note_pk.password)
-        if a == note_pk.password:
-            print("Есть")
-            return redirect("viewnote", pk)
-        else:
-            print("нЕТ")
-        # print("Здесь2", note_pk_password )
+    # if request.method == "POST":
+    #     a = request.POST["password_2"]
+    #     pk = request.POST["pk"]
+    #     print(request.POST)
+    #     print(a)
+    #     print('ЗДЕСЬ', pk)
+    #     note_pk = Note.objects.get(id=pk)
+    #     # note_pk_password = note_pk[1]
+    #     print("Здесь", note_pk.password)
+    #     if a == note_pk.password:
+    #         print("Есть")
+    #         flag =True
+    #         return redirect("viewnote", pk)
+    #     else:
+    #         print("нЕТ")
+    # print("Здесь2", note_pk_password )
 
     # categories = Category.objects.all()
     # res = ""
@@ -106,13 +105,31 @@ def get_one_note(request, note_id):
                                                      })
 
 
+@login_required
 def view_note(request, note_id):
     notes_item = get_object_or_404(Note, id=note_id)
     # notes_item = Note.objects.get(id=note_id)
     maincategories = MainCategory.objects.all()
-    return render(request, "noteapp/view_one.html", {'notesitem': notes_item,
-                                                     'maincategories': maincategories,
-                                                     })
+    if request.method == "POST":
+        a = request.POST["password_2"]
+        pk = request.POST["pk"]
+        # print(request.POST)
+        # print(a)
+        # print('id в пост', pk)
+        note_pk = Note.objects.get(id=pk)
+        # note_pk_password = note_pk[1]
+        # print("Здесь", note_pk.password)
+        if a == note_pk.password:
+            print("Есть")
+            return render(request, "noteapp/view_one.html", {'notesitem': notes_item,
+                                                             'maincategories': maincategories,
+                                                             })
+            # return redirect("viewnote", pk)
+        else:
+            return redirect("home")
+    # return render(request, "noteapp/view_one.html", {'notesitem': notes_item,
+    #                                                  'maincategories': maincategories,
+    #                                                  })
 
 
 @login_required  # Если не авторизован, то не добавишь новость

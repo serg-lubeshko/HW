@@ -27,7 +27,7 @@ class MainCategory(models.Model):
 
 
 class Note(models.Model):
-    title = models.CharField(max_length=150,
+    title = models.CharField(max_length=255,
                              verbose_name="Наименование")  # Здесь verbose для наименования столбцов на русском
     content = models.TextField(verbose_name="Контент")
     photo = models.ImageField(upload_to='photo_work/%Y/%m/%d/', verbose_name="Фото", blank=True)
@@ -36,7 +36,7 @@ class Note(models.Model):
     is_published = models.BooleanField(default="True", verbose_name="Публиковать?")
     category = models.ForeignKey(MainCategory, on_delete=models.PROTECT, null=True, related_name='sub', unique=False)
 
-    title_en = models.CharField(max_length=150, blank=True)
+    title_en = models.CharField(max_length=255, blank=True)
     content_en = models.TextField(blank=True)
     password = models.CharField(max_length=8, blank=True)
 

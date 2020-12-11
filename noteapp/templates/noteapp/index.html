@@ -3,7 +3,7 @@
 
 {% block content %}
     {#    <div class="col-md-9">#}
-    {% for i in notes %}
+    {% for i in notes reversed %}
         <div class="card mb-3">
 
             <div class="card-header">
@@ -34,11 +34,11 @@
 
 
             <div class="card-footer text-muted">
-                {{ i.created_at }} {{ i.created_at|timesince }}
+{#                {{ i.created_at}}#}
                 {% if request.user.is_authenticated %}
-                    <form action="{% url "home" %}" method="post">
+                    <form action="{{ i.get_absolute_url }}" method="post" class="m-2">
                         {% csrf_token %}
-                        <input id="id_password" type="password" placeholder="Пароль" , name="password_2">
+                        <input id="id_password" type="password" placeholder="Пароль (мой 123)" , name="password_2">
                         <input type="submit" value="Расшифровать">
                         <input type="hidden" , name="pk" , value="{{ i.pk }}">
 

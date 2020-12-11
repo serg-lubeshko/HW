@@ -29,7 +29,7 @@ class UserRegisterForm(UserCreationForm):
 
 
 class NoteForm(forms.Form):
-    title = forms.CharField(max_length=150, label='Название', required=False,
+    title = forms.CharField(max_length=255, label='Название', required=False,
                             widget=forms.TextInput(attrs={"class": "form-control"}))
     content = forms.CharField(label='Текст', required=False,
                               widget=forms.Textarea(attrs={"class": "form-control", "rows": "5"}))
