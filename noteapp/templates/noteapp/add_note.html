@@ -28,6 +28,8 @@
             <div class="form-group">
                 <label for="{{ form.is_published.id_for_label }}">Публиковать?</label>
                 {{ form.is_published }}
+
+                <p class="mt-3 float-right"><a href="{% url "addcategory" %}" class="btn btn-outline-primary">Добавить категорию</a></p>
                 <div class="invalid-feedback">
                     {{ form.is_published.errors }}
                 </div>
